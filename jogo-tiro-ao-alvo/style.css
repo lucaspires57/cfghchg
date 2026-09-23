@@ -1,0 +1,644 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    min-height: 100vh;
+
+    background: #111;
+
+    color: white;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 20px;
+}
+
+
+.game {
+
+    width: min(1050px, 100%);
+
+}
+
+
+/* TÍTULO */
+
+header {
+
+    text-align: center;
+
+    margin-bottom: 15px;
+
+}
+
+
+h1 {
+
+    font-size: clamp(
+        30px,
+        5vw,
+        48px
+    );
+
+    margin-bottom: 5px;
+
+}
+
+
+.subtitle {
+
+    color: #aaa;
+
+}
+
+
+/* INFORMAÇÕES */
+
+.info {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+
+    margin-bottom: 10px;
+
+}
+
+
+.card {
+
+    background: #1c1c1c;
+
+    border: 1px solid #333;
+
+    border-radius: 10px;
+
+    padding: 10px;
+
+    text-align: center;
+
+}
+
+
+.label {
+
+    color: #999;
+
+    font-size: 12px;
+
+    text-transform: uppercase;
+
+}
+
+
+.value {
+
+    font-size: 26px;
+
+    font-weight: bold;
+
+    margin-top: 3px;
+
+}
+
+
+/* ÁREA DO JOGO */
+
+#gameArea {
+
+    position: relative;
+
+    height: min(
+        62vh,
+        560px
+    );
+
+    min-height: 380px;
+
+    overflow: hidden;
+
+
+    /* IMAGEM DO FUNDO */
+
+    background-image:
+        url("fundo.png");
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
+
+
+    border: 2px solid #444;
+
+    border-radius: 12px;
+
+
+    /* ESCONDE O MOUSE */
+
+    cursor: none;
+
+}
+
+
+/* ESCURECIMENTO LEVE */
+
+#gameArea::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            0.08
+        );
+
+    pointer-events: none;
+
+    z-index: 1;
+
+}
+
+
+/* CONTAGEM 3 2 1 COMEÇAR */
+
+#countdown {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: white;
+
+    font-size:
+        clamp(
+            60px,
+            12vw,
+            130px
+        );
+
+    font-weight: 900;
+
+    text-shadow:
+        0 4px 15px #000;
+
+    z-index: 30;
+
+    pointer-events: none;
+
+}
+
+
+#countdown.show {
+
+    display: flex;
+
+}
+
+
+#countdown.animate {
+
+    animation:
+        countdownPop
+        0.8s
+        ease;
+
+}
+
+
+@keyframes countdownPop {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            scale(0.5);
+
+    }
+
+    30% {
+
+        opacity: 1;
+
+        transform:
+            scale(1.15);
+
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+            scale(1);
+
+    }
+
+}
+
+
+/* MENSAGEM */
+
+#message {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    color: white;
+
+    font-size: 18px;
+
+    text-shadow:
+        0 2px 5px #000;
+
+    pointer-events: none;
+
+    z-index: 5;
+
+}
+
+
+#message strong {
+
+    display: block;
+
+    font-size: 28px;
+
+    margin-bottom: 7px;
+
+}
+
+
+/* ALVO */
+
+#target {
+
+    position: absolute;
+
+    width: 70px;
+
+    height: 70px;
+
+    border-radius: 50%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    display: none;
+
+
+    background:
+
+        radial-gradient(
+            circle,
+
+            #111
+            0 13%,
+
+            white
+            14% 27%,
+
+            #e21d25
+            28% 48%,
+
+            white
+            49% 68%,
+
+            #e21d25
+            69% 100%
+        );
+
+
+    border:
+        3px solid white;
+
+
+    box-shadow:
+
+        0 0 0 3px #e21d25,
+
+        0 5px 12px #0008;
+
+
+    cursor: none;
+
+    z-index: 10;
+
+}
+
+
+/* ANIMAÇÃO DO ALVO */
+
+#target.hit {
+
+    animation:
+        hit
+        0.12s
+        ease-out;
+
+}
+
+
+@keyframes hit {
+
+    50% {
+
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(
+                0.82
+            );
+
+    }
+
+}
+
+
+/* ========================= */
+/* MIRA */
+/* ========================= */
+
+#crosshair {
+
+    position: absolute;
+
+    width: 42px;
+
+    height: 42px;
+
+    left: 0;
+
+    top: 0;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    display: none;
+
+    pointer-events: none;
+
+    z-index: 20;
+
+}
+
+
+/* MOSTRA A MIRA */
+
+#crosshair.show {
+
+    display: block;
+
+}
+
+
+/* LINHA HORIZONTAL */
+
+#crosshair .horizontal {
+
+    position: absolute;
+
+    width: 42px;
+
+    height: 2px;
+
+    left: 0;
+
+    top: 20px;
+
+    background: black;
+
+    box-shadow:
+        0 0 2px white;
+
+}
+
+
+/* LINHA VERTICAL */
+
+#crosshair .vertical {
+
+    position: absolute;
+
+    width: 2px;
+
+    height: 42px;
+
+    left: 20px;
+
+    top: 0;
+
+    background: black;
+
+    box-shadow:
+        0 0 2px white;
+
+}
+
+
+/* PONTO CENTRAL */
+
+#crosshair .center-dot {
+
+    position: absolute;
+
+    width: 6px;
+
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #e21d25;
+
+    border: 1px solid white;
+
+    left: 18px;
+
+    top: 18px;
+
+}
+
+
+/* BOTÕES */
+
+.controls {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-top: 12px;
+
+}
+
+
+button {
+
+    border: 0;
+
+    border-radius: 9px;
+
+    padding:
+        12px 22px;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    background: #e32626;
+
+    color: white;
+
+}
+
+
+button:hover {
+
+    filter:
+        brightness(1.1);
+
+}
+
+
+button.secondary {
+
+    background: #333;
+
+}
+
+
+button:disabled {
+
+    opacity: 0.45;
+
+    cursor:
+        not-allowed;
+
+}
+
+
+/* RESULTADO */
+
+.result {
+
+    display: none;
+
+    margin-top: 12px;
+
+    padding: 12px;
+
+    text-align: center;
+
+    background: #1c1c1c;
+
+    border:
+        1px solid #333;
+
+    border-radius: 10px;
+
+}
+
+
+.result.show {
+
+    display: block;
+
+}
+
+
+.final-score {
+
+    color: #f4c542;
+
+    font-size: 32px;
+
+    font-weight: bold;
+
+    margin: 5px 0;
+
+}
+
+
+small {
+
+    color: #999;
+
+}
+
+
+/* CELULAR */
+
+@media (
+    max-width: 600px
+) {
+
+    body {
+
+        padding: 10px;
+
+    }
+
+
+    .value {
+
+        font-size: 22px;
+
+    }
+
+
+    #gameArea {
+
+        min-height: 400px;
+
+    }
+
+}

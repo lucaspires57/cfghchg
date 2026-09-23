@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tiro ao Alvo</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="game">
+
+        <header>
+            <h1>🎯 TIRO AO ALVO</h1>
+            <p class="subtitle">
+                Acerte o maior número de alvos!
+            </p>
+        </header>
+
+
+        <section class="info">
+
+            <div class="card">
+                <div class="label">Pontuação</div>
+                <div class="value" id="score">0</div>
+            </div>
+
+            <div class="card">
+                <div class="label">Tempo</div>
+                <div class="value" id="time">30</div>
+            </div>
+
+            <div class="card">
+                <div class="label">Precisão</div>
+                <div class="value" id="accuracy">0%</div>
+            </div>
+
+        </section>
+
+
+        <section id="gameArea">
+
+            <!-- CONTAGEM REGRESSIVA -->
+            <div id="countdown"></div>
+
+
+            <!-- MENSAGEM INICIAL -->
+            <div id="message">
+
+                <div>
+
+                    <strong>Pronto?</strong>
+
+                    Clique em
+                    "Iniciar Jogo"
+                    para começar.
+
+                </div>
+
+            </div>
+
+
+            <!-- ALVO -->
+            <div id="target"></div>
+
+
+            <!-- MIRA -->
+            <div id="crosshair">
+
+                <span class="horizontal"></span>
+
+                <span class="vertical"></span>
+
+                <span class="center-dot"></span>
+
+            </div>
+
+        </section>
+
+
+        <div class="controls">
+
+            <button id="startBtn">
+                ▶ Iniciar Jogo
+            </button>
+
+            <button
+                id="restartBtn"
+                class="secondary"
+                disabled
+            >
+                ↻ Reiniciar
+            </button>
+
+        </div>
+
+
+        <div
+            id="result"
+            class="result"
+        >
+
+            <div>
+                Partida encerrada!
+            </div>
+
+            <div
+                class="final-score"
+                id="finalScore"
+            >
+                0 pontos
+            </div>
+
+            <small id="finalStats"></small>
+
+        </div>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
